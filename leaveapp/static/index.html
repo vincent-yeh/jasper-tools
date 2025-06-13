@@ -14,23 +14,53 @@
 <body>
 <h1 style="color:blue">請假申請</h1>
 <form id="leaveForm">
-    姓名：<input type="text" name="name"><br>
-    員工編號：<input type="text" name="empid"><br>
-    職稱：<input type="text" name="position"><br>
-    部門：<input type="text" name="department"><br>
-    請假種類：<select name="type">
-        <option value="事假">事假</option>
-        <option value="病假">病假</option>
-        <option value="特休">特休</option>
-        <option value="補休">補休</option>
-        <option value="喪假">喪假</option>
-        <option value="婚假">婚假</option>
-        <option value="育兒假">育兒假</option>
-    </select><br>
-    開始日期：<input type="date" name="start"><br>
-    結束日期：<input type="date" name="end"><br>
-    事由：<input type="text" name="reason"><br>
-    <button type="submit">送出</button>
+    <table>
+        <tr>
+            <td>姓名：</td>
+            <td><input type="text" name="name"></td>
+        </tr>
+        <tr>
+            <td>員工編號：</td>
+            <td><input type="text" name="empid"></td>
+        </tr>
+        <tr>
+            <td>職稱：</td>
+            <td><input type="text" name="position"></td>
+        </tr>
+        <tr>
+            <td>部門：</td>
+            <td><input type="text" name="department"></td>
+        </tr>
+        <tr>
+            <td>請假種類：</td>
+            <td>
+                <select name="type">
+                    <option value="事假">事假</option>
+                    <option value="病假">病假</option>
+                    <option value="特休">特休</option>
+                    <option value="補休">補休</option>
+                    <option value="喪假">喪假</option>
+                    <option value="婚假">婚假</option>
+                    <option value="育兒假">育兒假</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>開始日期：</td>
+            <td><input type="date" name="start"></td>
+        </tr>
+        <tr>
+            <td>結束日期：</td>
+            <td><input type="date" name="end"></td>
+        </tr>
+        <tr>
+            <td>事由：</td>
+            <td><input type="text" name="reason"></td>
+        </tr>
+        <tr>
+            <td colspan="2" style="text-align:right"><button type="submit">送出</button></td>
+        </tr>
+    </table>
 </form>
 <div id="previewDialog" style="display:none">
     <pre id="previewText"></pre>
