@@ -29,4 +29,4 @@ cd leaveapp
 go run main.go
 ```
 
-Open `http://localhost:8080` in your browser to submit and view leave requests. All JavaScript (a minimal jQuery subset and the dialog plugin) is served locally from the `static` directory.
+Open `http://localhost:8080` in your browser to submit and view leave requests. All JavaScript (the full jQuery library and the dialog plugin) is served locally from the `static` directory. Download `jquery.min.js` from the jQuery website and place it in `leaveapp/static/`.
