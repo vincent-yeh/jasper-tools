@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>請假管理</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="/static/jquery.dialog.js"></script>
+    <style>
+    .dlg-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.3);display:flex;align-items:center;justify-content:center;}
+    .dlg-box{background:#fff;padding:1em;border:1px solid #666;}
+    .dlg-buttons{text-align:right;margin-top:1em;}
+    </style>
+</head>
+<body>
+<h1 style="color:blue">請假申請</h1>
+<form id="leaveForm">
+    <table>
+        <tr>
+            <td>姓名：</td>
+            <td><input type="text" name="name"></td>
+        </tr>
+        <tr>
+            <td>員工編號：</td>
+            <td><input type="text" name="empid"></td>
+        </tr>
+        <tr>
+            <td>職稱：</td>
+            <td><input type="text" name="position"></td>
+        </tr>
+        <tr>
+            <td>部門：</td>
+            <td><input type="text" name="department"></td>
+        </tr>
+        <tr>
+            <td>請假種類：</td>
+            <td>
+                <select name="type">
+                    <option value="事假">事假</option>
+                    <option value="病假">病假</option>
+                    <option value="特休">特休</option>
+                    <option value="補休">補休</option>
+                    <option value="喪假">喪假</option>
+                    <option value="婚假">婚假</option>
+                    <option value="育兒假">育兒假</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>開始日期：</td>
+            <td><input type="date" name="start"></td>
+        </tr>
+        <tr>
+            <td>結束日期：</td>
+            <td><input type="date" name="end"></td>
+        </tr>
+        <tr>
+            <td>事由：</td>
+            <td><input type="text" name="reason"></td>
+        </tr>
+        <tr>
+            <td colspan="2" style="text-align:right"><button type="submit">送出</button></td>
+        </tr>
+    </table>
+</form>
+<div id="previewDialog" style="display:none">
+    <pre id="previewText"></pre>
+</div>
+<h2>申請紀錄</h2>
+<ul id="list">
+    {{range .}}
+    <li>{{.Name}} ({{.EmpID}}/{{.Position}}/{{.Department}}/{{.Type}})：{{.StartDate}} - {{.EndDate}}：{{.Reason}}</li>
+    {{end}}
+</ul>
+<script>
+$(function(){
+    function load(){
+        $.get('/requests', function(data){
+            $('#list').html($(data).find('li'));
+        });
+    }
+    load();
+    $('#leaveForm').on('submit', function(e){
+        e.preventDefault();
+        var f = this;
+        var preview =
+            '姓名: ' + f.name.value + '\n' +
+            '員工編號: ' + f.empid.value + '\n' +
+            '職稱: ' + f.position.value + '\n' +
+            '部門: ' + f.department.value + '\n' +
+            '請假種類: ' + f.type.value + '\n' +
+            '開始日期: ' + f.start.value + '\n' +
+            '結束日期: ' + f.end.value + '\n' +
+            '事由: ' + f.reason.value;
+        $('#previewText').text(preview);
+        $('#previewDialog').dialog({
+            buttons:{
+                '取消': function(){},
+                '送出': function(){
+                    $.post('/requests', $(f).serialize(), function(){
+                        load();
+                        f.reset();
+                    });
+                }
+            }
+        });
+    });
+});
+</script>
+</body>
+</html>
